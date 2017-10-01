@@ -37,17 +37,36 @@ $("#img-container").on("click", ".giff", function() {
 // 	- This data is provided by the GIPHY API.
 // 	- Only once you get images displaying with button presses should you move on to the next step.
 
-
-
-// add user input button to html 
-function appendNewButtons(newTopic) {
-  var topicButton = createButtonHTML(newTopic);
-  $("#btn-container").prepend(topicButton);
+function getGifyData(queryURL){
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).done(function(response){
+    // console.log(response);
+    // console.log(response.data[].images.fixed_height_small_still.url);
+    $("#img-container").empty();
+    response.data.forEach(function(element){
+      //console.log(element.images.fixed_height_small_still.url);
+      var stillImage = element.images.fixed_height_small_still.url;
+      var animatedImage = element.images.fixed_height_small.url;
+      //console.log(element.images.fixed_height_small.url);
+      var topicGif = createGifHTML(stillImage, animatedImage);
+      //$("#img-container").html("");
+      $("#img-container").append(topicGif);
+    });
+  });
 }
 
-$( document ).ready(function() {
-  appendStartingButtons();
-  $("#topic-form-submit").on("click", function(e) {
+function createGifHTML(url1, url2){
+  var elementImg = $("<img>");
+  elementImg.addClass("giff");
+  elementImg.attr("data-still", url1);
+  elementImg.attr("data-animated", url2);
+  elementImg.attr("src", url1);
+  return elementImg
+}
+
+$("#topic-form-submit").on("click", function(e) {
   // checking validity on jquery element 
    var inpObj = $("#topic-form");
     if (inpObj[0].checkValidity() == false) {
@@ -60,8 +79,26 @@ $( document ).ready(function() {
     topics.push(newTopic);
 
     appendNewButtons(newTopic);
+      $(".btn").on("click", function(){
+      var btnValue = $(this).text();
+      console.log(btnValue);
+      var apiKEY = "&api_key=dc6zaTOxFJmzC";
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "&limit=10" + apiKEY;
+      // make call to api
+      getGifyData(queryURL);
+    });
+    
     return false; // prevent page refresh
   });
+
+// add user input button to html 
+function appendNewButtons(newTopic) {
+  var topicButton = createButtonHTML(newTopic);
+  $("#btn-container").prepend(topicButton);
+}
+
+$( document ).ready(function() {
+  appendStartingButtons();
   // - When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
   // set a  event listener on `click`
   // check which button was click (this)
@@ -69,30 +106,10 @@ $( document ).ready(function() {
   $(".btn").on("click", function(){
     var btnValue = $(this).text();
     console.log(btnValue);
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue +"&api_key=dc6zaTOxFJmzC&limit=10";
-    // var queryURL = baseURL + btnValue;
+    var apiKEY = "&api_key=dc6zaTOxFJmzC";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "&limit=10" + apiKEY;
     // make call to api
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).done(function(response){
-      // console.log(response);
-      // console.log(response.data[].images.fixed_height_small_still.url);
-      $("#img-container").empty();
-      response.data.forEach(function(element){
-        //console.log(element.images.fixed_height_small_still.url);
-        var stillImage = element.images.fixed_height_small_still.url;
-        var animatedImage = element.images.fixed_height_small.url;
-        //console.log(element.images.fixed_height_small.url);
-        var elementImg = $("<img>");
-        elementImg.addClass("giff");
-        elementImg.attr("data-still", stillImage);
-        elementImg.attr("data-animated", animatedImage);
-        elementImg.attr("src", stillImage);
-        //$("#img-container").html("");
-        $("#img-container").append(elementImg);
-      });
-    });
+    getGifyData(queryURL);
   });
 });
 // - Deploy your assignment to Github Pages.
