@@ -5,7 +5,7 @@
 // - Before you can make any part of our site work, you need to create an array of strings, each one related to a topic that interests you. Save it to a variable called topics.
 // 	- We chose animals for our theme, but you can make a list to your own liking.
 
-var topics = ["doge", "crying jordan", "kellyanne conway"];
+var topics = ["doge", "crying jordan"];
 
 // - Your app should take the topics in this array and create buttons in your HTML.
 // 	- Try using a loop that appends a button for each string in the array.
@@ -51,8 +51,8 @@ function getGifyData(queryURL){
     $("#img-container").empty();
     response.data.forEach(function(element){
       //console.log(element.images.fixed_height_small_still.url);
-      var stillImage = element.images.fixed_width_still.url;
-      var animatedImage = element.images.fixed_width.url;
+      var stillImage = element.images.fixed_height_still.url;
+      var animatedImage = element.images.fixed_height.url;
       var gifRating = element.rating;
       //console.log(element.images.fixed_height_small.url);
       var topicGif = createGifHTML(stillImage, animatedImage, gifRating);
@@ -90,7 +90,7 @@ $("#topic-form-submit").on("click", function(e) {
     } else {
       e.preventDefault() 
     }
-    var newTopic = $("#topic-form-input").val();
+    var newTopic = $("#topic-form-input").val().trim();
     // console.log(newTopic);
     if(!topics.includes(newTopic)){
       topics.push(newTopic);
@@ -105,7 +105,7 @@ $("#topic-form-submit").on("click", function(e) {
       var btnValue = $(this).text();
       console.log(btnValue);
       var apiKEY = "&api_key=dc6zaTOxFJmzC";
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "&limit=10" + apiKEY;
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "meme" + "&limit=10" + apiKEY;
       // make call to api
       getGifyData(queryURL);
     });
