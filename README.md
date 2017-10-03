@@ -1,4 +1,4 @@
-# Gif Machine
+# Meme Machine
 using the GIPHY API to make a dynamic web page that populates with gifs.
 <img src="assets/images/poster.jpg?raw=true" >
 
