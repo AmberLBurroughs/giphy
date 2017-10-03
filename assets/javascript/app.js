@@ -1,7 +1,11 @@
+
+//$("form").trigger("reset");
+
+
 // - Before you can make any part of our site work, you need to create an array of strings, each one related to a topic that interests you. Save it to a variable called topics.
 // 	- We chose animals for our theme, but you can make a list to your own liking.
 
-var topics = ["cats", "dogs", "birds"];
+var topics = ["doge", "crying jordan", "kellyanne conway"];
 
 // - Your app should take the topics in this array and create buttons in your HTML.
 // 	- Try using a loop that appends a button for each string in the array.
@@ -47,24 +51,36 @@ function getGifyData(queryURL){
     $("#img-container").empty();
     response.data.forEach(function(element){
       //console.log(element.images.fixed_height_small_still.url);
-      var stillImage = element.images.fixed_height_small_still.url;
-      var animatedImage = element.images.fixed_height_small.url;
+      var stillImage = element.images.fixed_width_still.url;
+      var animatedImage = element.images.fixed_width.url;
+      var gifRating = element.rating;
       //console.log(element.images.fixed_height_small.url);
-      var topicGif = createGifHTML(stillImage, animatedImage);
+      var topicGif = createGifHTML(stillImage, animatedImage, gifRating);
       //$("#img-container").html("");
       $("#img-container").append(topicGif);
     });
   });
 }
 
-function createGifHTML(url1, url2){
+function createGifHTML(url1, url2, rating){
+  var imgContainer = $("<div>");
+  imgContainer.addClass("img-wrap");
   var elementImg = $("<img>");
   elementImg.addClass("giff");
   elementImg.attr("data-still", url1);
   elementImg.attr("data-animated", url2);
   elementImg.attr("src", url1);
-  return elementImg
+  var imgRating = $("<p>");
+  imgRating.addClass("ratingTxt");
+  imgRating.text(rating);
+  imgContainer.append(elementImg);
+  imgContainer.append(imgRating);
+  return imgContainer
 }
+
+$("#topic-form-input").on("click", function() {
+  $("#errormsg").addClass("hide");
+});
 
 $("#topic-form-submit").on("click", function(e) {
   // checking validity on jquery element 
@@ -76,10 +92,16 @@ $("#topic-form-submit").on("click", function(e) {
     }
     var newTopic = $("#topic-form-input").val();
     // console.log(newTopic);
-    topics.push(newTopic);
+    if(!topics.includes(newTopic)){
+      topics.push(newTopic);
+      appendNewButtons(newTopic);
+    } else {
+      $("#errormsg").removeClass("hide");
+    }
 
-    appendNewButtons(newTopic);
-      $(".btn").on("click", function(){
+    $("form").trigger("reset");
+
+    $(".btn").on("click", function(){
       var btnValue = $(this).text();
       console.log(btnValue);
       var apiKEY = "&api_key=dc6zaTOxFJmzC";
