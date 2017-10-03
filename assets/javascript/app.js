@@ -1,6 +1,6 @@
 
 //array of meme topics
-var topics = ["doge", "crying jordan", "shia labeouf", "grumpy cat"];
+var topics = ["doge", "crying jordan", "shia labeouf"];
 
 //append topics as buttons on page
 function appendStartingButtons() {
