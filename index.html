@@ -11,10 +11,15 @@
 		*:focus {
 			outline: none;
 		}
+		html, body {
+		  height: 100%;
+		}
 		body{
 			margin: 0;
 			padding: 0;
 			font-size: 20px;
+			display: flex;
+  			flex-direction: column;
 		}
 		h1 {
 			font-size: 3.5em;
@@ -41,6 +46,9 @@
 		p {
 			font-family: 'Inconsolata', monospace;
 			line-height: 1.5;
+		}
+		.content {
+		  flex: 1 0 auto;
 		}
 		#header {
 			background-color: #CDEF36;
@@ -127,10 +135,13 @@
 		.hide {
 			display: none;
 		}
+		.show {
+			display: inline-block;
+		}
 		section {
 			padding: 2%;
 		}
-		button {
+		button{
 			font-family: 'Inconsolata', monospace;
 			border-radius: 0;
 			border: none;
@@ -152,6 +163,34 @@
 		.btn:last-of-type {
 			margin-right: 0;
 			border-right: none;
+		}
+		#gif-wrap {
+
+		}
+		#to-top {
+			background-color: #FFF;
+    		float: right;
+    		width: 50px;
+    		height: 50px;
+    		border-radius: 100%;
+    		border:1px solid #000;
+    		text-align: center;
+    		cursor: pointer;
+    		position: fixed;
+    		z-index: 1000;
+    		top: 20px;
+    		right: 20px;
+		}
+
+		/*#to-top:hover {
+			border:1px solid #CDEF36;
+		}*/
+		#to-top p{
+			margin: 10px;
+		}
+		footer {
+			border-top: 2px solid #000;
+			text-align: center;
 		}
 		.clearfix:after {
 		  content: "";
@@ -191,6 +230,7 @@
 	</style>
 </head>
 <body>
+<div class="content">
 <section id="header">
 	<h4>KNOW YOUR MEME</h4>
 	<div id="heading" class="clearfix">
@@ -219,9 +259,14 @@
 	<h4>X</h4>
 	<div id="btn-container"></div>
 </section>
-<section>
+<section id="gif-wrap" class="clearfix">
+<div id="to-top" class="hide">
+	<p>&#8593;</p>
+</div>
 	<div id="img-container"></div>
 </section>
+</div>
+<footer><p>meme machine &lt;3 ambooger </p></footer>
 	<script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

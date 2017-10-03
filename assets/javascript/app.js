@@ -5,23 +5,35 @@
 // - Before you can make any part of our site work, you need to create an array of strings, each one related to a topic that interests you. Save it to a variable called topics.
 // 	- We chose animals for our theme, but you can make a list to your own liking.
 
-var topics = ["doge", "crying jordan"];
+var topics = ["doge", "crying jordan", "shia labeouf", "grumpy cat"];
 
 // - Your app should take the topics in this array and create buttons in your HTML.
 // 	- Try using a loop that appends a button for each string in the array.
-  function appendStartingButtons() {
-    topics.forEach(function(topic){
-      var topicButton = createButtonHTML(topic);
-      $("#btn-container").append(topicButton);
-    });
-  }
+function appendStartingButtons() {
+  topics.forEach(function(topic){
+    var topicButton = createButtonHTML(topic);
+    $("#btn-container").append(topicButton);
+  });
+}
 
-  function createButtonHTML(topic){
-    var topicButton = $("<button>");
-    topicButton.addClass("btn");
-    topicButton.text(topic);
-    return topicButton;
-  }
+function createButtonHTML(topic){
+  var topicButton = $("<button>");
+  topicButton.addClass("btn");
+  topicButton.text(topic);
+  return topicButton;
+}
+
+function clickMeme(){
+  var btnValue = $(this).text();
+  console.log(btnValue);
+  var apiKEY = "&api_key=dc6zaTOxFJmzC";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "&limit=10" + apiKEY;
+  // make call to api
+  getGifyData(queryURL);
+  $('html, body').animate({
+              scrollTop: $("#gif-wrap").offset().top
+          }, 500);
+}
 
 
 // - When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
@@ -101,14 +113,11 @@ $("#topic-form-submit").on("click", function(e) {
 
     $("form").trigger("reset");
 
-    $(".btn").on("click", function(){
-      var btnValue = $(this).text();
-      console.log(btnValue);
-      var apiKEY = "&api_key=dc6zaTOxFJmzC";
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "meme" + "&limit=10" + apiKEY;
-      // make call to api
-      getGifyData(queryURL);
-    });
+    $(".btn").on("click", clickMeme);
+
+
+       
+
     
     return false; // prevent page refresh
   });
@@ -125,13 +134,21 @@ $( document ).ready(function() {
   // set a  event listener on `click`
   // check which button was click (this)
   // get the text value of button clicked save that to a variable
-  $(".btn").on("click", function(){
-    var btnValue = $(this).text();
-    console.log(btnValue);
-    var apiKEY = "&api_key=dc6zaTOxFJmzC";
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + btnValue + "&limit=10" + apiKEY;
-    // make call to api
-    getGifyData(queryURL);
+  $(".btn").on("click", clickMeme);
+  $(window).scroll(function () {
+    if ($(window).scrollTop() > 700) {
+      $("#to-top").removeClass("hide");
+      //.fadeOut(1000)
+      $("#to-top").addClass("show");
+    }
+    if ($(window).scrollTop() < 700) {
+      $("#to-top").addClass("hide");
+      $("#to-top").removeClass("show");
+    }
+    $("#to-top").on("click", function() {
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+    return false;
+    });
   });
 });
 // - Deploy your assignment to Github Pages.
