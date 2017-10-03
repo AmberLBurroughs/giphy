@@ -1,9 +1,8 @@
 
-//array of MEME topics
+//array of meme topics
 var topics = ["doge", "crying jordan", "shia labeouf", "grumpy cat"];
 
-// - Your app should take the topics in this array and create buttons in your HTML.
-// 	- Try using a loop that appends a button for each string in the array.
+//append topics as buttons on page
 function appendStartingButtons() {
   topics.forEach(function(topic){
     var topicButton = createButtonHTML(topic);
@@ -11,6 +10,7 @@ function appendStartingButtons() {
   });
 }
 
+// create topic buttons
 function createButtonHTML(topic){
   var topicButton = $("<button>");
   topicButton.addClass("btn");
@@ -18,6 +18,8 @@ function createButtonHTML(topic){
   return topicButton;
 }
 
+// get btn val concatenate with queryURL
+// scroll to gif section 
 function clickMeme(){
   var btnValue = $(this).text();
   console.log(btnValue);
@@ -31,10 +33,7 @@ function clickMeme(){
 }
 
 
-// - When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
-// set a event listener on `click`
-// the image clicked check if the 
-// $(".giff").on("click", function() {
+// toggle animated and still image on click
 $("#img-container").on("click", ".giff", function() {
   console.log("clicked");
   var src = ($(this).attr("src") === $(this).attr("data-still"))
@@ -44,10 +43,7 @@ $("#img-container").on("click", ".giff", function() {
 });
 
 
-// - Under every gif, display its rating (PG, G, so on).
-// 	- This data is provided by the GIPHY API.
-// 	- Only once you get images displaying with button presses should you move on to the next step.
-
+// get gifs for topics with giphy api add them to page
 function getGifyData(queryURL){
   $.ajax({
     url: queryURL,
@@ -63,32 +59,39 @@ function getGifyData(queryURL){
       var gifRating = element.rating;
       //console.log(element.images.fixed_height_small.url);
       var topicGif = createGifHTML(stillImage, animatedImage, gifRating);
-      //$("#img-container").html("");
+  
       $("#img-container").append(topicGif);
     });
   });
 }
 
+// create html elements for api response
 function createGifHTML(url1, url2, rating){
   var imgContainer = $("<div>");
   imgContainer.addClass("img-wrap");
+
   var elementImg = $("<img>");
   elementImg.addClass("giff");
   elementImg.attr("data-still", url1);
   elementImg.attr("data-animated", url2);
   elementImg.attr("src", url1);
+
   var imgRating = $("<p>");
   imgRating.addClass("ratingTxt");
   imgRating.text("rated: " + rating);
+
   imgContainer.append(elementImg);
   imgContainer.append(imgRating);
+
   return imgContainer
 }
 
+// show error if user adds existing topic
 $("#topic-form-input").on("click", function() {
   $("#errormsg").addClass("hide");
 });
 
+// get input from form submit and validate 
 $("#topic-form-submit").on("click", function(e) {
   // checking validity on jquery element 
    var inpObj = $("#topic-form");
@@ -110,19 +113,18 @@ $("#topic-form-submit").on("click", function(e) {
 
     $(".btn").on("click", clickMeme);
 
-
-       
-
     
     return false; // prevent page refresh
   });
 
-// add user input button to html 
+
+// add user input as a new button to html 
 function appendNewButtons(newTopic) {
   var topicButton = createButtonHTML(newTopic);
   $("#btn-container").prepend(topicButton);
 }
 
+// on page load
 $( document ).ready(function() {
   appendStartingButtons();
   // - When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
@@ -131,6 +133,7 @@ $( document ).ready(function() {
   // get the text value of button clicked save that to a variable
   $(".btn").on("click", clickMeme);
   
+  // toggle scroll to top div visiblity for meme section 
   $(window).scroll(function () {
     if ($(window).scrollTop() > 700) {
       $("#to-top").removeClass("hide");
@@ -143,6 +146,7 @@ $( document ).ready(function() {
     }
   });
 
+// animate scroll to top 
   $("#to-top").on("click", function() {
       $("html, body").animate({ scrollTop: 0 }, "slow");
     return false;
