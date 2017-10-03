@@ -135,12 +135,12 @@ $( document ).ready(function() {
   
   // toggle scroll to top div visiblity for meme section 
   $(window).scroll(function () {
-    if ($(window).scrollTop() > 700) {
+    if ($(window).scrollTop() > 675) {
       $("#to-top").removeClass("hide").fadeIn(1000);
       //.fadeOut(1000)
       $("#to-top").addClass("show");
     }
-    if ($(window).scrollTop() < 700) {
+    if ($(window).scrollTop() < 675) {
       $("#to-top").addClass("hide").fadeOut(1000);
       $("#to-top").removeClass("show");
     }
