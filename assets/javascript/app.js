@@ -1,10 +1,5 @@
 
-//$("form").trigger("reset");
-
-
-// - Before you can make any part of our site work, you need to create an array of strings, each one related to a topic that interests you. Save it to a variable called topics.
-// 	- We chose animals for our theme, but you can make a list to your own liking.
-
+//array of MEME topics
 var topics = ["doge", "crying jordan", "shia labeouf", "grumpy cat"];
 
 // - Your app should take the topics in this array and create buttons in your HTML.
@@ -63,8 +58,8 @@ function getGifyData(queryURL){
     $("#img-container").empty();
     response.data.forEach(function(element){
       //console.log(element.images.fixed_height_small_still.url);
-      var stillImage = element.images.fixed_height_still.url;
-      var animatedImage = element.images.fixed_height.url;
+      var stillImage = element.images.fixed_width_still.url;
+      var animatedImage = element.images.fixed_width.url;
       var gifRating = element.rating;
       //console.log(element.images.fixed_height_small.url);
       var topicGif = createGifHTML(stillImage, animatedImage, gifRating);
@@ -84,7 +79,7 @@ function createGifHTML(url1, url2, rating){
   elementImg.attr("src", url1);
   var imgRating = $("<p>");
   imgRating.addClass("ratingTxt");
-  imgRating.text(rating);
+  imgRating.text("rated: " + rating);
   imgContainer.append(elementImg);
   imgContainer.append(imgRating);
   return imgContainer
