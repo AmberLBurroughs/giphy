@@ -106,7 +106,7 @@ $("#topic-form-submit").on("click", function(e) {
       topics.push(newTopic);
       appendNewButtons(newTopic);
     } else {
-      $("#errormsg").removeClass("hide");
+      $("#errormsg").hide().removeClass("hide").fadeIn(1000);
     }
 
     $("form").trigger("reset");
@@ -136,12 +136,12 @@ $( document ).ready(function() {
   // toggle scroll to top div visiblity for meme section 
   $(window).scroll(function () {
     if ($(window).scrollTop() > 700) {
-      $("#to-top").removeClass("hide");
+      $("#to-top").removeClass("hide").fadeIn(1000);
       //.fadeOut(1000)
       $("#to-top").addClass("show");
     }
     if ($(window).scrollTop() < 700) {
-      $("#to-top").addClass("hide");
+      $("#to-top").addClass("hide").fadeOut(1000);
       $("#to-top").removeClass("show");
     }
   });
