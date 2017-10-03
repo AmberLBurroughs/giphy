@@ -135,6 +135,7 @@ $( document ).ready(function() {
   // check which button was click (this)
   // get the text value of button clicked save that to a variable
   $(".btn").on("click", clickMeme);
+  
   $(window).scroll(function () {
     if ($(window).scrollTop() > 700) {
       $("#to-top").removeClass("hide");
@@ -145,10 +146,11 @@ $( document ).ready(function() {
       $("#to-top").addClass("hide");
       $("#to-top").removeClass("show");
     }
-    $("#to-top").on("click", function() {
+  });
+
+  $("#to-top").on("click", function() {
       $("html, body").animate({ scrollTop: 0 }, "slow");
     return false;
     });
-  });
 });
 // - Deploy your assignment to Github Pages.
