@@ -21,8 +21,8 @@ Open your cloned repositoy in a text editor to review the HTLM, CSS and JS.
 * [jQuery](http://api.jquery.com/) - The Javascript library used.
 * [Giphy](https://developers.giphy.com/docs/) - Gif API used.
 
-## Acknowledgments
+<!-- ## Acknowledgments -->
 
-* Special thanks to my instructor Jerome Chenette for project and direction.
-* Shout out Garrett Gruessing and Chi Lu for all your hard work in class.
+<!-- * Special thanks to my instructor Jerome Chenette for project and direction.
+* Shout out Garrett Gruessing and Chi Lu for all your hard work in class. -->
 
